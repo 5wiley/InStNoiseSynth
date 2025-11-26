@@ -6,6 +6,7 @@
 
   # https://devenv.sh/packages/
   packages = [
+    pkgs.clang-tools
     pkgs.git
     pkgs.cmake
     pkgs.pre-commit
@@ -13,6 +14,9 @@
 
   # https://devenv.sh/languages/
   # languages.rust.enable = true;
+  languages.cplusplus.enable = true;
+  languages.c.enable = true;
+
 
   # https://devenv.sh/processes/
   # processes.cargo-watch.exec = "cargo-watch";

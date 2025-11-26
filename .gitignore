@@ -7,6 +7,9 @@ release-build/
 out/
 vs-build/
 
+.clangd
+compile_commands.json
+
 # Prerequisites
 *.d
 

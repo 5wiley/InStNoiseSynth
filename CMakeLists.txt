@@ -16,6 +16,17 @@ set(CMAKE_CXX_STANDARD 20)
 # either as an environment variable or pass it to the cmake script with -DCPM_SOURCE_CACHE=<path>.
 set(LIB_DIR ${CMAKE_CURRENT_SOURCE_DIR}/libs)
 
+# Generate the `compile_commands.json` file.
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+# set(CMAKE_EXPORT_COMPILE_COMMANDS
+#     ON
+#     CACHE INTERNAL ""
+# )
+
+if(CMAKE_EXPORT_COMPILE_COMMANDS)
+  set(CMAKE_CXX_STANDARD_INCLUDE_DIRECTORIES ${CMAKE_CXX_IMPLICIT_INCLUDE_DIRECTORIES})
+endif()
+
 # Downloads CPM if not already downloaded. CPM is an easy-to-use package manager nicely integrated with CMake.
 include(cmake/cpm.cmake)
 
