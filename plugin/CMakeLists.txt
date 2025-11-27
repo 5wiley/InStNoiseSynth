@@ -13,9 +13,9 @@ juce_add_plugin(
   COMPANY_NAME
   "MyCompany" # change this
   IS_SYNTH
-  FALSE # may change this
+  TRUE # may change this
   NEEDS_MIDI_INPUT
-  FALSE # may change this
+  TRUE # may change this
   NEEDS_MIDI_OUTPUT
   FALSE # may change this
   PLUGIN_MANUFACTURER_CODE
