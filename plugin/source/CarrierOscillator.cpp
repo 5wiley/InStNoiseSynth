@@ -23,11 +23,11 @@ void CarrierOscillator::prepare(double newSampleRate) {
 }
 
 //==============================================================================
-float CarrierOscillator::processSample(float amplitudeModulation,
-                                       float phaseModulation) {
+float CarrierOscillator::processSample(double amplitudeModulation,
+                                       double phaseModulation) {
   // Generate sine wave with AM
   auto currentPhase = phase + phaseModulation;
-  auto sample = std::sin(currentPhase);
+  double sample = std::sin(currentPhase);
 
   // Apply AM
   sample *= amplitudeModulation;
@@ -45,7 +45,7 @@ float CarrierOscillator::processSample(float amplitudeModulation,
 
 //==============================================================================
 
-void CarrierOscillator::setFrequency(float frequencyHz) {
+void CarrierOscillator::setFrequency(double frequencyHz) {
   frequency = frequencyHz;
 }
 

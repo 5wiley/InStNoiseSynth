@@ -20,22 +20,23 @@ public:
 
   //==============================================================================
   void prepare(double sampleRate);
-  float processSample(float amplitudeModulation, float phaseModulation);
+  float processSample(double amplitudeModulation, double phaseModulation);
   void reset();
 
   //==============================================================================
-  void setFrequency(float frequencyHz);
-  float getFrequency() const noexcept { return frequency; };
+  void setFrequency(double frequencyHz);
+  double getFrequency() const noexcept { return frequency; }
 
 private:
   //==============================================================================
   void updatePhaseIncrement();
 
   //==============================================================================
-  float frequency = 1000.0f;
+  // Phase accumulation
+  double frequency = 1000.0;
   double phase = 0.0;
   double phaseIncrement = 0.0;
-  double sampleRate = 44100.0f;
+  double sampleRate = 44100.0;
 
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CarrierOscillator)
