@@ -1,5 +1,5 @@
-#include "InStNoiseSynth/PluginProcessor.h"
-#include "InStNoiseSynth/PluginEditor.h"
+#include "PluginProcessor.h"
+#include "PluginEditor.h"
 
 namespace audio_plugin {
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()

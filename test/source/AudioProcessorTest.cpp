@@ -1,4 +1,4 @@
-#include <InStNoiseSynth/PluginProcessor.h>
+#include "PluginProcessor.h"
 #include <gtest/gtest.h>
 
 namespace audio_plugin_test {
