@@ -18,6 +18,7 @@ CarrierOscillator::~CarrierOscillator() {
 //==============================================================================
 void CarrierOscillator::prepare(double newSampleRate) {
   sampleRate = newSampleRate;
+  updatePhaseIncrement();
 
   // Allocate buffers, prepare child objects, etc.
 }
@@ -33,7 +34,7 @@ float CarrierOscillator::processSample(double amplitudeModulation,
   sample *= amplitudeModulation;
 
   // Advance phase
-  phase *= phaseIncrement;
+  phase += phaseIncrement;
 
   // Wrap phase
   while (phase >= std::numbers::pi * 2) {
@@ -47,6 +48,7 @@ float CarrierOscillator::processSample(double amplitudeModulation,
 
 void CarrierOscillator::setFrequency(double frequencyHz) {
   frequency = frequencyHz;
+  updatePhaseIncrement();
 }
 
 //==============================================================================

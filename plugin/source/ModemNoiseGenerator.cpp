@@ -21,6 +21,11 @@ ModemNoiseGenerator::~ModemNoiseGenerator() {}
 
 void ModemNoiseGenerator::prepare(double newSampleRate) {
   sampleRate = newSampleRate;
+
+  // Prepare each carrier oscillator with the new sample rate
+  for (auto& carrier : carriers) {
+    carrier.prepare(sampleRate);
+  }
 }
 
 float ModemNoiseGenerator::processSamples() {

@@ -18,6 +18,10 @@ public:
   CarrierOscillator();
   ~CarrierOscillator();
 
+  // Move semantics (needed for use in std::vector)
+  CarrierOscillator(CarrierOscillator&&) = default;
+  CarrierOscillator& operator=(CarrierOscillator&&) = default;
+
   //==============================================================================
   void prepare(double sampleRate);
   float processSample(double amplitudeModulation, double phaseModulation);
