@@ -1,6 +1,7 @@
 #pragma once
 
 // Includes
+#include "SignalModulationSource.h"
 #include <juce_audio_processors/juce_audio_processors.h>
 #include <juce_dsp/juce_dsp.h>
 
@@ -24,7 +25,7 @@ public:
 
   //==============================================================================
   void prepare(double sampleRate);
-  float processSample(double amplitudeModulation, double phaseModulation);
+  float processSample();
   void reset();
 
   //==============================================================================
@@ -41,6 +42,10 @@ private:
   double phase = 0.0;
   double phaseIncrement = 0.0;
   double sampleRate = 44100.0;
+
+  // Modulation
+  SignalModulationSource ampModulator;
+  SignalModulationSource phaseModulator;
 
   //==============================================================================
   JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(CarrierOscillator)

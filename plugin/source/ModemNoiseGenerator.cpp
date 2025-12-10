@@ -32,7 +32,7 @@ float ModemNoiseGenerator::processSamples() {
   float mixedSample = 0.0;
 
   for (auto& carrier : carriers) {
-    mixedSample += carrier.processSample(1.0, 0.0);
+    mixedSample += carrier.processSample();
   }
 
   // average out the 21 oscillators

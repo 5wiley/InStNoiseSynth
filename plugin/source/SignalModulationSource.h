@@ -10,6 +10,10 @@ public:
   SignalModulationSource();
   ~SignalModulationSource();
 
+  // Move semantics (needed for use in std::vector)
+  SignalModulationSource(SignalModulationSource&&) = default;
+  SignalModulationSource& operator=(SignalModulationSource&&) = default;
+
   void prepare(double newSampleRate);
   void setRate(double rateHz);
   float getNextValue();

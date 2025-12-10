@@ -20,18 +20,28 @@ void CarrierOscillator::prepare(double newSampleRate) {
   sampleRate = newSampleRate;
   updatePhaseIncrement();
 
+  phaseModulator.prepare(sampleRate);
+  ampModulator.prepare(sampleRate);
+
   // Allocate buffers, prepare child objects, etc.
 }
 
 //==============================================================================
-float CarrierOscillator::processSample(double amplitudeModulation,
-                                       double phaseModulation) {
-  // Generate sine wave with AM
-  auto currentPhase = phase + phaseModulation;
+float CarrierOscillator::processSample() {
+  float ampMod = ampModulator.getNextValue();
+  float phaseMod = phaseModulator.getNextValue();
+
+  // scale and transform into a double
+  double phaseModScaled =
+      (static_cast<double>(phaseMod) * 2.0 - 1.0) * std::numbers::pi;
+  double ampModScaled = static_cast<double>(ampMod) * 2.0 - 1.0;
+
+  // Generate sine wave with PM
+  auto currentPhase = phase + phaseModScaled;
   double sample = std::sin(currentPhase);
 
   // Apply AM
-  sample *= amplitudeModulation;
+  sample *= ampModScaled;
 
   // Advance phase
   phase += phaseIncrement;
