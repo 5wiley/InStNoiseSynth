@@ -23,10 +23,11 @@ private:
   void generateNewValue();
 
   juce::Random random;
+  juce::LinearSmoothedValue<float> linearSmoothedValue;
   double sampleRate = 44100.0;
   double rate = 3000.0;
   double samplesPerSymbol = 0.0;
   double sampleCounter = 0.0;
-  float currentValue = 0.0f;
+  float targetValue = 0.0f;
 };
 }  // namespace audio_plugin

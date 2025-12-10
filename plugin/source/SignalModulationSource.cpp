@@ -5,7 +5,7 @@
 namespace audio_plugin {
 
 SignalModulationSource::SignalModulationSource() {
-  generateNewValue();
+  linearSmoothedValue.setCurrentAndTargetValue(random.nextFloat());
 }
 SignalModulationSource::~SignalModulationSource() {}
 
@@ -13,11 +13,19 @@ void SignalModulationSource::prepare(double newSampleRate) {
   sampleRate = newSampleRate;
   samplesPerSymbol = sampleRate / rate;
   sampleCounter = 0.0;
+
+  // 1000 / rate = signal rate in Ms
+  double smoothingPeriodMs = (1000 / rate) / 0.2;
+  linearSmoothedValue.reset(sampleRate, smoothingPeriodMs);
 }
 
 void SignalModulationSource::setRate(double rateHz) {
   rate = rateHz;
   samplesPerSymbol = sampleRate / rate;
+
+  // 1000 / rate = signal rate in Ms
+  double smoothingPeriodMs = (1000 / rate) / 0.2;
+  linearSmoothedValue.reset(sampleRate, smoothingPeriodMs);
 }
 
 float SignalModulationSource::getNextValue() {
@@ -25,11 +33,11 @@ float SignalModulationSource::getNextValue() {
 
   if (sampleCounter >= samplesPerSymbol) {
     sampleCounter -= samplesPerSymbol;
-    // update current value
+    // update linear smoothed value
     generateNewValue();
   }
 
-  return currentValue;
+  return linearSmoothedValue.getNextValue();
 }
 
 void SignalModulationSource::reset() {
@@ -38,6 +46,8 @@ void SignalModulationSource::reset() {
 }
 
 void SignalModulationSource::generateNewValue() {
-  currentValue = random.nextFloat();
+  targetValue = random.nextFloat();
+  // returned in getNextValue
+  linearSmoothedValue.setTargetValue(targetValue);
 }
 }  // namespace audio_plugin
