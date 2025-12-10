@@ -24,8 +24,12 @@ void SignalModulationSource::setRate(double rateHz) {
   samplesPerSymbol = sampleRate / rate;
 
   // 1000 / rate = signal rate in Ms
-  double smoothingPeriodMs = (1000 / rate) / 0.2;
+  double smoothingPeriodMs = (1000 / rate) * smoothingPeriodIndex;
   linearSmoothedValue.reset(sampleRate, smoothingPeriodMs);
+}
+
+void SignalModulationSource::setSlewIndex(double slewIndex) {
+  smoothingPeriodIndex = slewIndex;
 }
 
 float SignalModulationSource::getNextValue() {

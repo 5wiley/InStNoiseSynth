@@ -1,5 +1,6 @@
 #include "PluginProcessor.h"
 #include "PluginEditor.h"
+#include "PluginParameters.h"
 
 namespace audio_plugin {
 AudioPluginAudioProcessor::AudioPluginAudioProcessor()
@@ -11,7 +12,8 @@ AudioPluginAudioProcessor::AudioPluginAudioProcessor()
 #endif
               .withOutput("Output", juce::AudioChannelSet::stereo(), true)
 #endif
-      ) {
+              ),
+      apvts(*this, nullptr, "Parameters", Parameters::createParameterLayout()) {
 }
 
 AudioPluginAudioProcessor::~AudioPluginAudioProcessor() {}
@@ -78,6 +80,14 @@ void AudioPluginAudioProcessor::prepareToPlay(double sampleRate,
   // initialisation that you need..
   juce::ignoreUnused(samplesPerBlock);
 
+  // output gain
+  juce::dsp::ProcessSpec spec;
+  spec.sampleRate = sampleRate;
+  spec.maximumBlockSize = static_cast<juce::uint32>(samplesPerBlock);
+  spec.numChannels = static_cast<juce::uint32>(getTotalNumOutputChannels());
+  outputGain.prepare(spec);
+  outputGain.setRampDurationSeconds(0.05);
+
   // Initialize the modem noise generator with the sample rate
   modemNoiseGenerator.prepare(sampleRate);
 }
@@ -128,6 +138,20 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
   for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
     buffer.clear(i, 0, buffer.getNumSamples());
 
+  // Get parameter values
+  float volume =
+      apvts.getRawParameterValue(Parameters::volume.getParamID())->load();
+  float symbolRate =
+      apvts.getRawParameterValue(Parameters::symbolRate.getParamID())->load();
+  float slewIndex =
+      apvts.getRawParameterValue(Parameters::slewIndex.getParamID())->load();
+  float modDepth =
+      apvts.getRawParameterValue(Parameters::modDepth.getParamID())->load();
+
+  modemNoiseGenerator.setSymbolRate(static_cast<double>(symbolRate));
+  modemNoiseGenerator.setModulationDepth(modDepth);
+  modemNoiseGenerator.setSlewIndex(static_cast<double>(slewIndex));
+
   // This is the place where you'd normally do the guts of your plugin's
   // audio processing...
   // Make sure to reset the state if your inner loop is processing
@@ -143,6 +167,12 @@ void AudioPluginAudioProcessor::processBlock(juce::AudioBuffer<float>& buffer,
       channelData[sample] = modemNoiseGenerator.processSamples();
     }
   }
+
+  // Apply volume control using the output gain
+  outputGain.setGainLinear(volume);
+  juce::dsp::AudioBlock<float> block(buffer);
+  juce::dsp::ProcessContextReplacing<float> context(block);
+  outputGain.process(context);
 }
 
 bool AudioPluginAudioProcessor::hasEditor() const {

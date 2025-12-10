@@ -28,8 +28,8 @@ void CarrierOscillator::prepare(double newSampleRate) {
 
 //==============================================================================
 float CarrierOscillator::processSample() {
-  float ampMod = ampModulator.getNextValue();
-  float phaseMod = phaseModulator.getNextValue();
+  float ampMod = ampModulator.getNextValue() * modDepth;
+  float phaseMod = phaseModulator.getNextValue() * modDepth;
 
   // scale and transform into a double
   double phaseModScaled =
@@ -59,6 +59,20 @@ float CarrierOscillator::processSample() {
 void CarrierOscillator::setFrequency(double frequencyHz) {
   frequency = frequencyHz;
   updatePhaseIncrement();
+}
+
+void CarrierOscillator::setModulatorSymbolRate(double rateHz) {
+  phaseModulator.setRate(rateHz);
+  ampModulator.setRate(rateHz);
+}
+
+void CarrierOscillator::setModulationDepth(float modDepthIndex) {
+  modDepth = modDepthIndex;
+}
+
+void CarrierOscillator::setModulatorSlewIndex(double slewIndex) {
+  phaseModulator.setSlewIndex(slewIndex);
+  ampModulator.setSlewIndex(slewIndex);
 }
 
 //==============================================================================

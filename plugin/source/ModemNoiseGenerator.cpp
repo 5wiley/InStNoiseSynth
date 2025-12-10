@@ -47,4 +47,22 @@ void ModemNoiseGenerator::reset() {
   }
 }
 
+void ModemNoiseGenerator::setSymbolRate(double rateHz) {
+  for (auto& carrier : carriers) {
+    carrier.setModulatorSymbolRate(rateHz);
+  }
+}
+
+void ModemNoiseGenerator::setModulationDepth(float modDepth) {
+  for (auto& carrier : carriers) {
+    carrier.setModulationDepth(modDepth);
+  }
+}
+
+void ModemNoiseGenerator::setSlewIndex(double slewIndex) {
+  for (auto& carrier : carriers) {
+    carrier.setModulatorSlewIndex(slewIndex);
+  }
+}
+
 }  // namespace audio_plugin

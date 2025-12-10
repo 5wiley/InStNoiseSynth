@@ -6,6 +6,11 @@
 #include <juce_dsp/juce_dsp.h>
 #include <vector>
 
+/**
+ * This manages n oscilators and their modulators to create a din of
+ * modem noise.
+ */
+
 namespace audio_plugin {
 class ModemNoiseGenerator {
 public:
@@ -15,6 +20,11 @@ public:
   void prepare(double newSampleRate);
   float processSamples();
   void reset();
+
+  // parameters
+  void setSymbolRate(double rateHz);
+  void setModulationDepth(float modDepth);
+  void setSlewIndex(double slewIndex);
 
 private:
   // create a vector of CarrierOscillator objects from CarrierOscillator.h/cpp

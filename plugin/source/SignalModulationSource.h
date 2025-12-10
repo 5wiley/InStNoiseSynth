@@ -4,6 +4,12 @@
 #include <juce_core/juce_core.h>
 #include <random>
 
+/*
+ * A random number generator to generate numbers at a modems signal rate.
+ *
+ * Modulators are owned by their carrier oscillators and are set there.
+ */
+
 namespace audio_plugin {
 class SignalModulationSource {
 public:
@@ -16,6 +22,7 @@ public:
 
   void prepare(double newSampleRate);
   void setRate(double rateHz);
+  void setSlewIndex(double slewIndex);
   float getNextValue();
   void reset();
 
@@ -29,5 +36,6 @@ private:
   double samplesPerSymbol = 0.0;
   double sampleCounter = 0.0;
   float targetValue = 0.0f;
+  double smoothingPeriodIndex = 0.0;
 };
 }  // namespace audio_plugin

@@ -9,7 +9,7 @@
 // class SomeClass;
 
 /**
- * Brief description of what this class does
+ * This is a single oscillator with a modulator for AM and PM
  */
 namespace audio_plugin {
 class CarrierOscillator {
@@ -32,6 +32,10 @@ public:
   void setFrequency(double frequencyHz);
   double getFrequency() const noexcept { return frequency; }
 
+  void setModulatorSymbolRate(double rateHz);
+  void setModulationDepth(float modDepthIndex);
+  void setModulatorSlewIndex(double slewIndex);
+
 private:
   //==============================================================================
   void updatePhaseIncrement();
@@ -42,6 +46,7 @@ private:
   double phase = 0.0;
   double phaseIncrement = 0.0;
   double sampleRate = 44100.0;
+  float modDepth;
 
   // Modulation
   SignalModulationSource ampModulator;
