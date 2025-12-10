@@ -35,6 +35,7 @@ set(SOURCE_FILES
     source/PluginProcessor.cpp
     source/CarrierOscillator.cpp
     source/ModemNoiseGenerator.cpp
+    source/SignalModulationSource.cpp
 )
 
 # Optional; includes header files in the project file tree in Visual Studio
@@ -43,6 +44,7 @@ set(HEADER_FILES
     ${INCLUDE_DIR}/PluginProcessor.h
     ${INCLUDE_DIR}/CarrierOscillator.h
     ${INCLUDE_DIR}/ModemNoiseGenerator.h
+    ${INCLUDE_DIR}/SignalModulationSource.h
 )
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
 

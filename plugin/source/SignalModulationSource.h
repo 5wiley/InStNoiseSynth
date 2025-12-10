@@ -1,0 +1,28 @@
+#pragma once
+
+#include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_core/juce_core.h>
+#include <random>
+
+namespace audio_plugin {
+class SignalModulationSource {
+public:
+  SignalModulationSource();
+  ~SignalModulationSource();
+
+  void prepare(double newSampleRate);
+  void setRate(double rateHz);
+  float getNextValue();
+  void reset();
+
+private:
+  void generateNewValue();
+
+  juce::Random random;
+  double sampleRate = 44100.0;
+  double rate = 3000.0;
+  double samplesPerSymbol = 0.0;
+  double sampleCounter = 0.0;
+  float currentValue = 0.0f;
+};
+}  // namespace audio_plugin

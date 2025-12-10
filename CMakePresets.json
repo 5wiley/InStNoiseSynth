@@ -8,7 +8,7 @@
   "configurePresets": [
     {
       "name": "default",
-      "generator": "Ninja",
+      "generator": "Unix Makefiles",
       "binaryDir": "build",
       "cacheVariables": {
         "CMAKE_EXPORT_COMPILE_COMMANDS": "ON",
@@ -56,7 +56,9 @@
     {
       "name": "default",
       "configurePreset": "default",
-      "output": { "outputOnFailure": true },
+      "output": {
+        "outputOnFailure": true
+      },
       "execution": {
         "noTestsAction": "error",
         "stopOnFailure": false
