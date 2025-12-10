@@ -45,6 +45,7 @@ set(HEADER_FILES
     ${INCLUDE_DIR}/CarrierOscillator.h
     ${INCLUDE_DIR}/ModemNoiseGenerator.h
     ${INCLUDE_DIR}/SignalModulationSource.h
+    ${INCLUDE_DIR}/PluginParameters.h
 )
 target_sources(${PROJECT_NAME} PRIVATE ${SOURCE_FILES} ${HEADER_FILES})
 
